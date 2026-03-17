@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Flappy Bird</title>
+<title>Untitled Bird Game</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;}
@@ -248,7 +248,7 @@ if(gameState==='playing')drawScore(score,BASE_WIDTH/2,50,'large');
 
 if(gameState==='ready'){
 ctx.fillStyle='#FFF';ctx.strokeStyle='#543847';ctx.lineWidth=4;ctx.font='bold 38px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
-ctx.strokeText('Flappy Bird',BASE_WIDTH/2,100);ctx.fillText('Flappy Bird',BASE_WIDTH/2,100);
+ctx.font='bold 28px Arial';ctx.strokeText('Untitled Bird Game',BASE_WIDTH/2,100);ctx.fillText('Untitled Bird Game',BASE_WIDTH/2,100);
 ctx.font='bold 14px Arial';ctx.lineWidth=2;ctx.strokeText('Best: '+bestScore,BASE_WIDTH/2,140);ctx.fillText('Best: '+bestScore,BASE_WIDTH/2,140);
 ctx.fillStyle='#F5A623';ctx.strokeStyle='#C77E1A';ctx.lineWidth=3;roundRect(ctx,startButton.x,startButton.y,startButton.width,startButton.height,10);ctx.fill();ctx.stroke();
 ctx.fillStyle='#FFF';ctx.strokeStyle='#543847';ctx.lineWidth=2;ctx.font='bold 16px Arial';
