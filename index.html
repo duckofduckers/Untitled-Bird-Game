@@ -16,6 +16,8 @@ canvas{display:block;}
 <div id="gameContainer"><canvas id="game"></canvas></div>
 <script>
 (function(){
+window.addEventListener('beforeunload',function(e){if(!navigator.onLine){e.preventDefault();e.returnValue='';}});
+window.addEventListener('offline',function(){var origReload=location.reload;location.reload=function(){};window.addEventListener('online',function r(){location.reload=origReload;window.removeEventListener('online',r);});});
 var canvas=document.getElementById('game');
 var ctx=canvas.getContext('2d');
 var BASE_WIDTH=288,BASE_HEIGHT=512,scale=1;
@@ -310,5 +312,3 @@ requestAnimationFrame(gameLoop);
 </script>
 </body>
 </html>
-
-<!-- Temo was here.. -->
