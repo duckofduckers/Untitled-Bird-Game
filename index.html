@@ -1,6 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+<script>
+async function isActuallyOnline() {
+    if (!navigator.onLine) return false;
+    try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 3000);
+        const response = await fetch('https://cdn.jsdelivr.net/npm/ping?noCache=' + Date.now(), {
+            method: 'HEAD',
+            mode: 'no-cors',
+            signal: controller.signal
+        });
+        clearTimeout(timeout);
+        return true;
+    } catch {
+        return false;
+    }
+}
+(async function() {
+    const online = await isActuallyOnline();
+    if (!online) {
+        document.documentElement.innerHTML = '';
+        window.stop();
+        throw new Error('OFFLINE');
+    }
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Untitled Bird Game</title>
@@ -15,44 +41,6 @@ canvas{display:block;}
 <body>
 <div id="gameContainer"><canvas id="game"></canvas></div>
 <script>
-(function(){
-    if (!navigator.onLine) {
-        document.body.innerHTML = `
-            <div style="
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                font-family: Arial, sans-serif;
-                color: white;
-                z-index: 9999;
-            ">
-                <div>
-                    <div style="font-size: 48px; margin-bottom: 20px;">📡</div>
-                    <div style="font-size: 24px; margin-bottom: 10px;">No Internet Connection</div>
-                    <div style="font-size: 14px;">Please connect to the internet and refresh the page</div>
-                    <button onclick="location.reload()" style="
-                        margin-top: 30px;
-                        background: #5CB84E;
-                        color: white;
-                        border: none;
-                        padding: 10px 20px;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        font-size: 16px;
-                    ">Retry</button>
-                </div>
-            </div>
-        `;
-        throw new Error('No internet connection - game blocked');
-    }
-})();
 (function(){
 var canvas=document.getElementById('game');
 var ctx=canvas.getContext('2d');
